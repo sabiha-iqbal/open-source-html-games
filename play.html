@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyper Hunt</title> <!-- Title will be set dynamically by JS -->
+    <link href="assets/fonts" rel="stylesheet">
+    <link rel="stylesheet" href="assets/all.min.css">
+    <link rel="stylesheet" href="assets/play.css">
+     <link href="assets/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div id="loading-progress">Loading....</div>
+        <div id="loading-bar-container">
+            <div id="loading-bar"></div>
+        </div>
+        <div class="loading-tip-box" style="display: none;"> <!-- Hidden initially, shown after loading -->
+            <h2 id="welcome-title"></h2>
+            <p id="welcome-message"></p>
+            <button id="start-game-button"></button>
+        </div>
+    </div>
+
+    <div id="game-info">
+        <div>
+            <div>
+                <img src="assets/icons/heart.png" alt="heart icon" width="25" height="25">  
+                <span class="my-auto" id="chances-left"></span>
+            </div>
+            <div>
+                <img class="mb-1" src="assets/icons/clock.png" alt="heart icon" width="25" height="25">  
+                <span  class="my-auto" id="timer" class="timer"></span>
+                s
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <div id="animal-icon-container" class="my-auto me-1"></div>
+            <div style="margin-top: 16px;" id="score"></div>
+        </div>
+        <div>
+            <button id="pause-button">
+                <img src="assets/icons/pause.png" alt="pause icon" width="25" height="25"> 
+                <i class="fas fa-pause"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="game-area">
+        <div id="taunt-box"></div>
+        <div id="c-zone-container"></div>
+
+        <div id="game-over-screen">
+            <h4 id="game-over-message"></h4>
+            <p id="game-over-score"></p>
+            <div style="display: flex; justify-content: center;">
+                <div><button class="game-over-button" id="play-again-btn">Play Again</button></div>
+                <div><button class="game-over-button back-to-levels" id="back-to-levels-btn">Back to Home</button></div>
+            </div>
+        </div>
+
+        <div id="level-success-screen">
+            <h4 id="level-complete-title"></h4>
+            <img id="full-animal-img" src="" alt="Full Animal">
+            <p id="success-message"></p>
+            <div style="display: flex; justify-content: center;">
+                <div><button class="success-button next-level" id="success-next-level-btn">Play Next Level</button></div>
+                <div><button class="success-button home" id="success-home-btn">Back to Home</button></div>
+            </div>
+        </div>
+
+        <div id="pause-screen">
+            <h4>Game Paused</h4>
+            <div style="display: flex; justify-content: center;">
+                <button class="game-over-button" id="resume-button">Resume</button>
+                <button class="game-over-button" id="restart-button">Restart</button>
+                <button class="game-over-button back-to-levels" id="quit-button">Quit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio elements - sources will be set by JavaScript -->
+    <audio id="button-click-sound" preload="auto"></audio>
+    <audio id="animal-catch-sound" preload="auto"></audio>
+    <audio id="background-music" loop preload="auto"></audio>
+    <audio id="taunt-sound" preload="auto"></audio>
+
+    <script src="config/levelConfig.js"></script>
+    <script src="assets/popper.min.js" ></script>
+    <script src="assets/bootstrap.min.js"></script>
+     
+    <script src="assets/play.js"></script>
+</body>
+</html>

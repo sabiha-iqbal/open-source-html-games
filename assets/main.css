@@ -1,0 +1,870 @@
+:root {
+    /* Default fallback colors - will be overridden by GAME_CONFIG */
+    --index-body-gradient-start: #87CEEB;
+    --index-body-gradient-end: #6A5ACD;
+    --index-panel-bg-color: rgba(255, 255, 255, 0.2);
+    --index-panel-shadow-color: rgba(0, 0, 0, 0.3);
+    --index-level-node-gradient-start: #8B4513;
+    /* SaddleBrown */
+    --index-level-node-gradient-end: #A0522D;
+    /* Sienna */
+    --index-level-node-border-color: #DEB887;
+    /* BurlyWood */
+    --index-level-node-locked-gradient-start: #696969;
+    --index-level-node-locked-gradient-end: #808080;
+    --index-level-node-locked-border-color: #A9A9A9;
+    --index-level-node-overlay-color: rgba(0, 0, 0, 0.1);
+    --index-complete-screen-bg-color: rgba(0, 0, 0, 0.85);
+    --index-complete-screen-title-color: #FFD700;
+    --index-complete-screen-text-color: #ffffff;
+    --index-complete-button-next-bg: #4CAF50;
+    --index-complete-button-next-hover: #45a049;
+    --index-complete-button-home-bg: #007bff;
+    --index-complete-button-home-hover: #0056b3;
+    --index-bg-animal-opacity: 0.1;
+
+    /* Loading Screen Specific CSS Variables */
+    --loading-bg-color: #1f4905;
+    /* Dark blue/purple */
+    --loading-text-color: white;
+    --loading-bar-bg: #726f1e;
+    --loading-bar-fill: #51d500;
+    /* Cyan */
+    --loading-bar-border: rgb(255, 201, 39);
+}
+
+/* Loading Screen Styles */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    /* Solid background */
+    background-image: url('../images/loading-screen.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    /* Ensure it's on top */
+    color: var(--loading-text-color);
+    font-family: 'Open Sans', sans-serif;
+    transition: opacity 0.5s ease-out;
+    /* Smooth fade out */
+}
+
+@media (max-width: 767px) {
+    #loading-screen {
+        background: url('../images/loading-screen-mobile.png');
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#loading-text {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 2.5em;
+    margin-bottom: 0px;
+    position: fixed;
+    bottom: 140px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.progress-container {
+    width: 80%;
+    max-width: 500px;
+    background-color: var(--loading-bar-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    position: fixed;
+    bottom: 108px;
+    border: 2px solid var(--loading-bar-border);
+}
+
+.progress-bar {
+    height: 30px;
+    width: 0%;
+    background-color: var(--loading-bar-fill);
+    border-radius: 10px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+    transition: width 0.3s ease-in-out;
+    font-size: 1.1em;
+}
+
+@media (max-width: 767px) {
+    #body {
+        background: url('../images/home-mobile.png');
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+/* General Styles & Background */
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    background-image: url('../images/home.png');
+    /* Reverted to home.png */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background: linear-gradient(to bottom right, var(--index-body-gradient-start), var(--index-body-gradient-end)); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Changed to fixed height */
+    overflow: hidden;
+    /* This prevents the main body from scrolling */
+    position: relative;
+    color: var(--index-complete-screen-text-color);
+    text-align: center;
+    /* Center the title */
+    /* animation: backgroundPan 60s linear infinite alternate; */
+    /* Removed pan animation */
+}
+
+@keyframes backgroundPan {
+    0% {
+        background-position: 50% 50%;
+    }
+
+    100% {
+        background-position: 60% 60%;
+    }
+}
+
+/* Game Title Styling - REMOVED */
+/* #game-title {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 4em;
+    color: var(--index-complete-screen-title-color);
+    text-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        0 0 30px var(--index-complete-screen-title-color),
+        0 0 40px var(--index-complete-screen-title-color),
+        4px 4px 8px rgba(0, 0, 0, 0.7);
+    margin-bottom: 30px;
+    z-index: 2;
+    text-align: center;
+    flex-shrink: 0;
+    /* Prevents title from shrinking */
+/*    animation: titleFloat 3s ease-in-out infinite;
+} */
+
+@keyframes titleFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.firefly-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    /* Behind container (which is z-index 1) */
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.leaves-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    /* Inside container, behind nodes (z-index 5) */
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.bg-element {
+    position: absolute;
+    /* border-radius: 50%; */
+    /* Leaves aren't circles */
+    object-fit: contain;
+    opacity: 0.6;
+    will-change: transform, opacity;
+    pointer-events: none;
+}
+
+.leaf {
+    position: absolute;
+    width: 30px;
+    /* Default size, will be randomized in JS */
+    height: 30px;
+    background-image: url('../images/leaf.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 0;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translate(-10vw, -10vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    90% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translate(110vw, 110vh) rotate(720deg);
+        /* Diagonal movement + rotation */
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(110vw, 110vh) rotate(720deg);
+        /* Diagonal movement + rotation */
+        opacity: 0;
+    }
+}
+
+/* Firefly Animation */
+.firefly {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #ffff00;
+    /* Yellow */
+    box-shadow: 0 0 10px #ffff00, 0 0 20px #ffa500;
+    /* Stronger Glow */
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transition: top ease-in-out, left ease-in-out;
+    /* Smooth movement */
+    /* Animation handled by JS for movement, CSS for pulse */
+    animation: fireflyPulse 2s ease-in-out infinite alternate;
+}
+
+/* Removed fireflyFloat keyframes as movement is now JS-driven */
+
+@keyframes fireflyPulse {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Level Selection Container */
+.level-selection-container {
+    /* padding: 20px; */
+    /* background-color: rgb(5, 121, 5, 0.2); */
+    /* Removed */
+    /* border-radius: 20px; */
+    /* Removed */
+    /* border-top: 2px solid rgb(255, 201, 39); */
+    /* Removed */
+    /* box-shadow: 0 8px 30px var(--index-panel-shadow-color); */
+    /* Removed */
+    /* backdrop-filter: blur(10px); */
+    /* Removed */
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    /* Full width */
+    max-width: 100%;
+    /* Full width */
+    height: 100vh;
+    /* Full height */
+    margin: 0;
+    /* Remove margin */
+    /* overflow-y: auto; REMOVED - moved to inner scroll area */
+    /* -webkit-overflow-scrolling: touch; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('../images/home-mobile.png');
+    /* Restored background */
+    background-size: cover;
+    background-position: center;
+    transform: translateZ(0);
+    /* Create stacking context */
+    overflow: hidden;
+    /* Ensure navbar stays at bottom */
+}
+
+.level-scroll-area {
+    flex: 1;
+    width: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* PC Layout Refinements */
+@media (min-width: 768px) {
+    .level-selection-container {
+        width: 600px;
+        border-left: 2px solid rgb(255, 201, 39);
+        border-right: 2px solid rgb(255, 201, 39);
+        margin: 0 auto;
+        /* Center horizontally */
+    }
+}
+
+#levelRow {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* Force vertical stack */
+    align-items: center;
+    padding-bottom: 50px;
+    /* Space for bottom scroll */
+    position: relative;
+    z-index: 1;
+    /* Ensure nodes are above leaves */
+}
+
+/* Level Node Styling */
+.level-node {
+    width: 116px;
+    height: 116px;
+    /* background-color: var(--index-level-node-gradient-start); */
+    /* background-image: linear-gradient(135deg, #95640a, #95640a); */
+    background-image: url('../images/level-node-bg.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 4px solid var(--index-level-node-border-color);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
+    margin: auto;
+    text-align: center;
+    overflow: hidden;
+    /* For shine effect */
+    z-index: 5;
+}
+
+.level-node::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    transition: left 0.5s;
+    pointer-events: none;
+}
+
+.level-node:hover::after {
+    left: 150%;
+    transition: left 0.7s;
+}
+
+.level-node:hover:not(.locked) {
+    transform: scale(1.15) rotate(3deg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px var(--index-level-node-border-color);
+    border-color: #fff;
+}
+
+/* Locked Level Node */
+.level-node.locked {
+    background-image: linear-gradient(var(--index-level-node-overlay-color), var(--index-level-node-overlay-color)),
+        linear-gradient(to right, var(--index-level-node-locked-gradient-start), var(--index-level-node-locked-gradient-end));
+    border-color: var(--index-level-node-locked-border-color);
+    cursor: not-allowed;
+    filter: grayscale(80%);
+    opacity: 0.8;
+}
+
+.level-node h2 {
+    font-family: 'Luckiest Guy', cursive;
+    color: #fff;
+    margin: 0;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+.level-node .level-name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7em;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 5px;
+    z-index: 2;
+    line-height: 1.2;
+    display: none;
+    /* Hide level name to match reference */
+}
+
+.level-node.locked h2,
+.level-node.locked .level-name {
+    visibility: hidden;
+}
+
+/* Lock Icon */
+.lock-icon {
+    position: absolute;
+    font-size: 4em;
+    color: #555;
+    /* Metallic grey */
+    text-shadow:
+        1px 1px 0 #999,
+        -1px -1px 0 #333,
+        2px 2px 5px rgba(0, 0, 0, 0.5);
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0) 20%);
+    pointer-events: none;
+    z-index: 1;
+    display: none;
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5));
+}
+
+.level-node.locked .lock-icon {
+    display: block;
+}
+
+/* Level Complete Screen Styling */
+#level-complete-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--index-complete-screen-bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none;
+    color: var(--index-complete-screen-text-color);
+    text-align: center;
+    backdrop-filter: blur(5px);
+}
+
+#level-complete-screen h2 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 3.5em;
+    color: var(--index-complete-screen-title-color);
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+}
+
+#level-complete-screen p {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+}
+
+.complete-button {
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    color: var(--index-complete-screen-text-color);
+}
+
+.complete-button.next-level {
+    background-color: var(--index-complete-button-next-bg);
+}
+
+.complete-button.next-level:hover {
+    background-color: var(--index-complete-button-next-hover);
+    transform: translateY(-2px);
+}
+
+.complete-button.home {
+    background-color: var(--index-complete-button-home-bg);
+}
+
+.complete-button.home:hover {
+    background-color: var(--index-complete-button-home-hover);
+    transform: translateY(-2px);
+}
+
+.level-stars {
+    position: absolute;
+    top: -25px;
+    /* Moved higher up */
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.level-stars img {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    transform-origin: bottom center;
+}
+
+.level-stars img:nth-child(1) {
+    transform: translateX(-22px) translateY(5px) rotate(-20deg);
+}
+
+.level-stars img:nth-child(2) {
+    transform: translateY(-5px);
+}
+
+.level-stars img:nth-child(3) {
+    transform: translateX(22px) translateY(5px) rotate(20deg);
+}
+
+/* Wrapper for level node to handle stars outside overflow:hidden */
+.level-node-wrapper {
+    position: relative;
+    margin: 20px;
+    /* Spacing between levels */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.level-node {
+    position: relative;
+    /* padding-top: 15px; */
+    /* Removed padding */
+    z-index: 5;
+}
+
+/* Adjust lock icon position */
+.level-node .lock-icon {
+    position: absolute;
+    bottom: 14px;
+}
+
+
+
+
+
+/* Scrollbar Styles for Webkit browsers (Chrome, Safari) */
+.level-selection-container::-webkit-scrollbar {
+    width: 12px;
+    /* Width of the scrollbar */
+}
+
+.level-selection-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    /* Color of the scrollbar track */
+    border-radius: 10px;
+}
+
+.level-selection-container::-webkit-scrollbar-thumb {
+    background-color: var(--index-complete-screen-title-color);
+    /* Color of the scrollbar thumb */
+    border-radius: 10px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    /* Border to create padding around the thumb */
+}
+
+/* Hide scrollbar for other browsers if needed, though they usually have a different look by default */
+/* For Firefox */
+.level-selection-container {
+    scrollbar-color: var(--index-complete-screen-title-color) rgba(255, 255, 255, 0.1);
+    /* thumb and track color */
+}
+
+/* Shake animation for locked levels */
+.shake-locked {
+    animation: shakeLocked 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shakeLocked {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0) rotate(-1deg);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0) rotate(1deg);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0) rotate(-1deg);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0) rotate(1deg);
+    }
+}
+
+/* Pulse animation for the current level */
+.current-level-pulse {
+    animation: levelPulse 2s infinite;
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+}
+
+@keyframes levelPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+/* Bottom Navbar */
+.bottom-navbar {
+    /* position: fixed; REMOVED */
+    position: relative;
+    width: 100%;
+    height: 80px;
+    /* Increased height for images */
+    background-color: rgba(28, 73, 0, 0.89);
+    /* Slightly more transparent */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+    border-top: 2px solid #FFD700;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+    /* Prevent shrinking */
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.nav-item.active,
+.nav-item:hover {
+    color: #FFD700;
+    transform: translateY(-2px);
+}
+
+.nav-item img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+    object-fit: contain;
+}
+
+.nav-item span {
+    font-size: 0.8em;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Modals */
+.modal-overlay {
+    position: absolute;
+    /* Changed from fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 80px);
+    /* Sit above navbar */
+    background-image: url('../images/home-mobile.png');
+    /* Match theme */
+    background-size: cover;
+    background-position: center;
+    display: none;
+    /* Hidden by default */
+    justify-content: center;
+    align-items: flex-start;
+    /* Align to top */
+    z-index: 20;
+    /* Above level list, below navbar */
+    padding-top: 20px;
+}
+
+.modal-content {
+    background: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent dark bg for readability */
+    padding: 20px;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    text-align: center;
+    position: relative;
+    border: none;
+    box-shadow: none;
+    color: white;
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2em;
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: #FFD700;
+}
+
+.modal-content h2 {
+    font-family: 'Luckiest Guy', cursive;
+    color: #FFD700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Leaderboard Styles */
+.leaderboard-list {
+    text-align: left;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.leaderboard-item:last-child {
+    border-bottom: none;
+}
+
+.leaderboard-item.current-user {
+    background-color: rgba(255, 215, 0, 0.2);
+    border-radius: 10px;
+    border: 1px solid #FFD700;
+}
+
+.rank {
+    font-weight: bold;
+    width: 30px;
+    color: #FFD700;
+}
+
+.user-info {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    border: 2px solid #fff;
+}
+
+.score {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* Profile Styles */
+.profile-pic-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile-pic-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #FFD700;
+    object-fit: cover;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#change-pic-btn,
+#save-profile-btn {
+    padding: 8px 16px;
+    background-color: #FFD700;
+    border: none;
+    border-radius: 20px;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#change-pic-btn:hover,
+#save-profile-btn:hover {
+    background-color: #ffed4a;
+    transform: scale(1.05);
+}
+
+#profile-name-input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 80%;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.1em;
+}

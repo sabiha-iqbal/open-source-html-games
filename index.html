@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FFA500">
+    <link rel="icon" type="image/png" href="" id="favicon-link">
+    <title>Hyper Hunt: The Journey Begins!</title>
+    <!-- Preload the loading screen images to ensure they load before the loading bar -->
+    <!-- This tells the browser to download these files with high priority -->
+    <link rel="preload" href="images/loading-screen.png" as="image" media="(min-width: 768px)">
+    <link rel="preload" href="images/loading-screen-mobile.png" as="image" media="(max-width: 767px)">
+
+    <!-- Also preloading the favicon for a faster initial load -->
+    <link href="favicon.ico">
+
+
+    <link href="assets/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/fonts" rel="stylesheet">
+    <link rel="stylesheet" href="assets/all.min.css">
+    <link rel="stylesheet" href="assets/main.css">
+</head>
+
+<body>
+
+    <span id="pwa-status" class="d-none"></span>
+    <audio id="backgroundMusic" loop autoplay>
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="loading-screen">
+        <div id="loading-text">Loading...</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0%</div>
+        </div>
+    </div>
+
+
+
+
+    <div class="firefly-container d-none"></div>
+    <div class="leaves-container d-none"></div>
+
+    <div class="level-selection-container d-none">
+        <div class="level-scroll-area">
+            <div class="col-12 justify-content-center" id="levelRow">
+            </div>
+        </div>
+
+        <!-- Leaderboard Modal -->
+        <div id="leaderboard-modal" class="modal-overlay">
+            <div class="modal-content">
+                <span class="close-modal" id="close-leaderboard">&times;</span>
+                <h2>Leaderboard</h2>
+                <div class="leaderboard-list" id="leaderboard-list">
+                    <!-- Leaderboard items will be injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Modal -->
+        <div id="profile-modal" class="modal-overlay">
+            <div class="modal-content">
+                <span class="close-modal" id="close-profile">&times;</span>
+                <h2>Profile</h2>
+                <div class="profile-form">
+                    <div class="profile-pic-container">
+                        <img id="profile-pic-preview" src="assets/icons/user-default.png" alt="Profile Pic">
+                        <input type="file" id="profile-pic-input" accept="image/*" style="display: none;">
+                        <button id="change-pic-btn">Change Photo</button>
+                    </div>
+                    <input type="text" id="profile-name-input" placeholder="Enter your name" maxlength="15">
+                    <button id="save-profile-btn">Save Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navbar -->
+        <div class="bottom-navbar">
+            <div class="nav-item active" id="nav-home">
+                <img src="assets/icons/home-icon.png" alt="Home">
+                <span>Home</span>
+            </div>
+            <div class="nav-item" id="nav-leaderboard">
+                <img src="assets/icons/leaderboard-icon.png" alt="Leaderboard">
+                <span>Leaderboard</span>
+            </div>
+            <div class="nav-item" id="nav-profile">
+                <img src="assets/icons/profile-icon.png" alt="Profile">
+                <span>Profile</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="level-complete-screen">
+        <h2 id="complete-message">Level Complete!</h2>
+        <p id="complete-details"></p>
+        <button class="complete-button next-level" id="play-next-level-btn">Play Next Level</button>
+        <button class="complete-button home" id="back-to-home-btn">Back to Home</button>
+    </div>
+
+
+
+
+
+    <script src="config/gameConfig.js"></script>
+    <script src="config/levelConfig.js"></script>
+    <script src="assets/popper.min.js"></script>
+    <script src="assets/bootstrap.min.js"></script>
+    <script src="assets/main.js"></script>
+
+
+</body>
+
+</html>

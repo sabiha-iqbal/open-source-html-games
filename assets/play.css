@@ -1,0 +1,654 @@
+:root {
+    /* Default fallback colors - will be overridden by levelConfig */
+    --level-bg-color: #000000;
+    --level-text-color: #ffffff;
+    --level-sec-color: #FFD700;
+    --level-danger-color: #FF0000;
+    --level-warning-color: #FFA500;
+    /* For rgba calculations */
+    --level-bg-color-rgb: 0, 0, 0;
+    --level-sec-color-rgb: 255, 215, 0;
+    --level-sec-color-darker: #CCAA00;
+    /* Default darker for hover */
+}
+
+/* General Body and Game Container Styling */
+body {
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    /* Background image set dynamically by JS */
+    background-size: cover;
+    background-position: center;
+    color: var(--level-text-color);
+    /* Dynamic text color */
+    position: relative;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+/* Pause Button Styling */
+#pause-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: var(--level-text-color);
+    /* Dynamic text color */
+    /* padding: 5px 10px; */
+    border-radius: 50%;
+    font-family: 'Luckiest Guy', cursive;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 45px;
+    width: 45px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#pause-button:hover {
+    background-color: rgba(var(--level-sec-color-rgb), 0.4);
+    /* Dynamic hover background */
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 0 15px rgba(var(--level-sec-color-rgb), 0.6);
+    border-color: #fff;
+}
+
+/* Responsive adjustments for loading/start screen */
+@media (max-width: 768px) {
+    #loading-screen .loading-tip-box {
+        padding: 20px;
+        max-width: 90%;
+        width: auto;
+        border-radius: 10px;
+    }
+
+    #loading-screen .loading-tip-box h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+
+    #loading-screen .loading-tip-box p {
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+    #start-game-button {
+        padding: 12px 25px;
+        font-size: 1.2em;
+    }
+}
+
+/* Loading/Start Screen Container */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Keep fixed dark overlay */
+    display: flex;
+    /* Visible by default on page load */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    text-align: center;
+}
+
+/* Loader (Spinner) styles */
+.loader {
+    border: 8px solid #f3f3f3;
+    /* Light grey */
+    border-top: 8px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Loading Progress Text */
+#loading-progress {
+    font-size: 1.2em;
+    color: var(--level-text-color);
+    /* Dynamic text color */
+    margin-bottom: 10px;
+}
+
+/* Loading Bar Container */
+#loading-bar-container {
+    width: 80%;
+    max-width: 400px;
+    background-color: var(--level-text-color);
+    /* Dynamic background for bar container */
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px;
+    margin-bottom: 30px;
+}
+
+/* Actual Loading Bar */
+#loading-bar {
+    width: 0%;
+    height: 100%;
+    background-color: var(--level-sec-color);
+    /* Dynamic progress bar color */
+    border-radius: 5px;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Welcome/Start Game Box (initially hidden, shown after loading) */
+#loading-screen .loading-tip-box {
+    background-color: rgba(var(--level-bg-color-rgb), 0.15);
+    /* Dynamic background with transparency */
+    border: 2px solid var(--level-sec-color);
+    /* Dynamic border color */
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 500px;
+    box-shadow: 0 0 25px rgba(var(--level-sec-color-rgb), 0.4);
+    /* Dynamic glow effect */
+    animation: pulse 2s infinite alternate;
+    display: flex;
+    /* Changed to flex to stack children */
+    flex-direction: column;
+    /* Stack children vertically */
+    justify-content: center;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
+    display: none;
+    /* Hidden initially, shown by JS after assets load */
+}
+
+@keyframes pulse {
+    from {
+        box-shadow: 0 0 15px rgba(var(--level-sec-color-rgb), 0.2);
+    }
+
+    to {
+        box-shadow: 0 0 30px rgba(var(--level-sec-color-rgb), 0.6);
+    }
+}
+
+#loading-screen .loading-tip-box h2 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1.8em;
+    color: var(--level-sec-color);
+    /* Dynamic title color */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+#loading-screen .loading-tip-box p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.1em;
+    color: var(--level-text-color);
+    /* Dynamic paragraph color */
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+#start-game-button {
+    padding: 15px 35px;
+    background-color: var(--level-sec-color);
+    /* Dynamic button background */
+    color: var(--level-text-color);
+    /* Dynamic button text color */
+    border: none;
+    border-radius: 10px;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#start-game-button:hover {
+    background-color: var(--level-sec-color-darker);
+    /* Dynamic darker hover background */
+    transform: translateY(-3px);
+}
+
+/* Game Area - The clickable canvas */
+#game-area {
+    position: fixed;
+    bottom: 70px;
+    width: 100%;
+    height: 70vh;
+    max-width: 1000px;
+    /*max-height: 700px;*/
+    /* Background image set dynamically by JS */
+    background-size: cover;
+    background-position: center;
+    /*border-radius: 15px;*/
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    cursor: crosshair;
+    border: 3px solid var(--level-sec-color);
+    /* Dynamic border color */
+    display: none;
+    /* Hidden by default until game starts */
+}
+
+/* Animal Image Styling */
+.animal {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    transition: transform 0.1s linear, opacity 0.3s ease-in-out;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 1;
+    /* Default visible */
+}
+
+.animal.hidden {
+    /* Class for when animal is hidden */
+    opacity: 0;
+}
+
+.animal.caught {
+    display: none;
+    /* Hide caught animals */
+}
+
+/* Taunting Comment Box */
+#taunt-box {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Keep white for contrast */
+    color: #333;
+    /* Keep dark for contrast */
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+/* Game Info Display - HUD Style */
+#game-info {
+    display: none;
+    /* Hidden by default until game starts */
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    max-width: 800px;
+    padding: 10px 20px;
+    /* background-color set dynamically in JS */
+    background: rgba(0, 0, 0, 0.4);
+    /* Fallback/Base */
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    position: fixed;
+    top: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    z-index: 100;
+}
+
+#game-info div {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    color: var(--level-text-color);
+    /* Dynamic text color */
+}
+
+#game-info span {
+    color: var(--level-text-color);
+    /* Dynamic accent color for values */
+}
+
+/* Comfort Zone (C-Zone) Container - Not used for visual elements anymore, but kept for structure */
+#c-zone-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+@media (max-width: 767px) {
+    #game-area {
+        height: 89%;
+        bottom: 0px;
+        /* Mobile background set dynamically by JS */
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+/* Game Over Screen */
+#game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Keep dark overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    display: none;
+}
+
+#game-over-screen h4 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 3em;
+    color: var(--level-sec-color);
+    /* Dynamic title color */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+}
+
+#game-over-screen p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: var(--level-text-color);
+    /* Dynamic text color */
+}
+
+.game-over-button {
+    padding: 12px 25px;
+    background-color: var(--level-sec-color);
+    /* Dynamic button background */
+    color: var(--level-text-color);
+    /* Dynamic button text color */
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.game-over-button:hover {
+    background-color: var(--level-sec-color-darker);
+    /* Dynamic darker hover background */
+    transform: translateY(-2px);
+}
+
+.game-over-button.back-to-levels {
+    background-color: #007bff;
+    /* Keep fixed blue for consistency across levels */
+}
+
+.game-over-button.back-to-levels:hover {
+    background-color: #0056b3;
+    /* Keep fixed blue for consistency across levels */
+    transform: translateY(-2px);
+}
+
+/* Success Screen */
+#level-success-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Keep dark overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 300;
+    display: none;
+    color: var(--level-text-color);
+    /* Dynamic text color */
+    text-align: center;
+}
+
+#level-success-screen h4 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1.5em;
+    color: var(--level-sec-color);
+    /* Dynamic title color */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+}
+
+#level-success-screen img {
+    max-width: 80%;
+    max-height: 250px;
+    border-radius: 10px;
+
+}
+
+.success-button {
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.success-button.next-level {
+    background-color: var(--level-sec-color);
+    /* Dynamic button background */
+    color: var(--level-text-color);
+    /* Dynamic button text color */
+}
+
+.success-button.next-level:hover {
+    background-color: var(--level-sec-color-darker);
+    /* Dynamic darker hover background */
+    transform: translateY(-2px);
+}
+
+.success-button.home {
+    background-color: #007bff;
+    /* Keep fixed blue for consistency across levels */
+    color: white;
+}
+
+.success-button.home:hover {
+    background-color: #0056b3;
+    /* Keep fixed blue for consistency across levels */
+    transform: translateY(-2px);
+}
+
+/* Timer styling */
+.timer {
+    color: var(--level-text-color);
+    /* Base dynamic color, overridden by JS for warnings */
+}
+
+.fa-heart {
+    color: var(--level-danger-color);
+    /* Dynamic heart color */
+}
+
+/* Pause Screen */
+#pause-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Keep dark overlay */
+    display: none;
+    /* Hidden by default */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 400;
+}
+
+#pause-screen h4 {
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 3em;
+    color: var(--level-text-color);
+    /* Dynamic title color */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+}
+
+#pause-screen .game-over-button {
+    /* Reusing button styles */
+    margin: 10px;
+}
+
+.stars-earned {
+    font-size: 2em;
+    color: gold;
+    margin: 10px 0;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.result-stars {
+    font-size: 2em;
+    margin: 10px 0;
+    color: gold;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Splatter Effect Particles */
+.splatter-particle {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+    animation: splatter-fade-out 0.8s ease-out forwards;
+}
+
+@keyframes splatter-fade-out {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.5) translate(var(--splatter-x), var(--splatter-y));
+        opacity: 0;
+    }
+}
+
+/* Screen Shake Animation */
+.screen-shake {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+/* Floating Text Animation */
+.floating-text {
+    position: absolute;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1.5em;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+    pointer-events: none;
+    animation: floatUp 1s ease-out forwards;
+    z-index: 150;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-50px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* Score Pulse */
+.score-pulse {
+    animation: scorePop 0.3s ease-out;
+}
+
+@keyframes scorePop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.5);
+        color: var(--level-sec-color);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
